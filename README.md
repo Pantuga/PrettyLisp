@@ -8,7 +8,7 @@ The code was made in C# and .NET.
 ## How to install
 
 There aren't any binaries in the repository yet, so you might have to compile it yourself.
-The solution file and the `.csproj` files are both avaliable in the repository.
+The solution file and the `.csproj` file are both avaliable in the repository.
 
 ## How to use the program
 
