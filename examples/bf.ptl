@@ -1,3 +1,4 @@
+# declare all the important variables
 {pointer := 0}
 {tape := []}
 {tape_size .= 255}
@@ -7,9 +8,10 @@
   {tape = (append tape 0)}
 )
 
-{code .= (input)}
+{code .= (input)} # get input code from user
 {i := 0}
 
+# the function that evaluates one symbol
 (define eval ["x"] <
   (ifelse {x == \>}
     {pointer = {pointer+1}}
@@ -23,7 +25,7 @@
             (set_at tape pointer {{tape at pointer} + 1})
             (ifelse {x == \-}
               (set_at tape pointer {{tape at pointer} - 1})
-              (ifelse {x == \[} <
+              (if {x == \[} <
                 {i = {i+1}}
                 {start_i .= i}
                 (while {{tape at pointer} != 0} <
@@ -32,19 +34,19 @@
                   >)
                   {i = start_i}
                 >)
-              >
-              <>)
+              >)
             )
           )
         )
       )
     )
   )
+  # wrap around logic
   (if {pointer .> tape_size} {pointer = 0})
   (if {pointer .< 0} {pointer = tape_size})
 >)
 
+# evaluate every symbol in the code
 (for <>{i .< (length code)}{i={i+1}} <
   (eval {code at i})
-  #(println tape " - " pointer)
 >)

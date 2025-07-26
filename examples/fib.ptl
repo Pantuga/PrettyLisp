@@ -1,10 +1,15 @@
+# recursive function to calculate the nth number in the fibonacci sequence
 (define fib ["n"] <
   (if {n .< 0} (return "undefined"))
-  (if {n == 0} (return 0))
-  (if {n == 1} (return 1))
-  {result := {(fib {n - 1}) + (fib {n - 2})}}
-  (return result)
+  (if {n == 0} (return 0)) # F[0] = 0
+  (if {n == 1} (return 1)) # F[1] = 1
+
+  # F[n] = F[n-1] + F[n-2]
+  (return {(fib {n - 1}) + (fib {n - 2})})
 >)
+
+# get input number from user
 {in := (parse_num (input))}
+
 (println "The " in "th fibonacci number is:")
 (println (fib in))

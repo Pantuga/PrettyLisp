@@ -1,8 +1,12 @@
+# recursive function to calculate factorial
 (define factorial ["n"] <
   (if {n .< 0} (return "undefined"))
-  (if {n == 0} (return 1))
-  (return {n*(factorial {n - 1})})
+  (if {n == 0} (return 1)) # 0! = 1
+  (return {n*(factorial {n - 1})}) # n! = n * (n-1)!
 >)
+
+# get input number from user
 {in := (parse_num (input))}
+
 (println "The factorial of " in " is:")
 (println (factorial in))
