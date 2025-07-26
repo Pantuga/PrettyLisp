@@ -1,0 +1,4 @@
+(ifelse {(input) == "0"}
+  (println "0")
+  (while true (println "1"))
+)

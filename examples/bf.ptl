@@ -1,0 +1,50 @@
+{pointer := 0}
+{tape := []}
+{tape_size .= 255}
+
+# init tape 
+(while {(length tape) .<= tape_size} 
+  {tape = (append tape 0)}
+)
+
+{code .= (input)}
+{i := 0}
+
+(define eval ["x"] <
+  (ifelse {x == \>}
+    {pointer = {pointer+1}}
+    (ifelse {x == \<}
+      {pointer = {pointer-1}}
+      (ifelse {x == \.}
+        (print (char {tape at pointer}))
+        (ifelse {x == \,}
+          (set_at tape pointer {(input) at 0})
+          (ifelse {x == \+}
+            (set_at tape pointer {{tape at pointer} + 1})
+            (ifelse {x == \-}
+              (set_at tape pointer {{tape at pointer} - 1})
+              (ifelse {x == \[} <
+                {i = {i+1}}
+                {start_i .= i}
+                (while {{tape at pointer} != 0} <
+                  (for <>{{code at i} != \]}{i = {i+1}} <
+                    (eval {code at i})
+                  >)
+                  {i = start_i}
+                >)
+              >
+              <>)
+            )
+          )
+        )
+      )
+    )
+  )
+  (if {pointer .> tape_size} {pointer = 0})
+  (if {pointer .< 0} {pointer = tape_size})
+>)
+
+(for <>{i .< (length code)}{i={i+1}} <
+  (eval {code at i})
+  #(println tape " - " pointer)
+>)
